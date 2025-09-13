@@ -33,7 +33,6 @@ function App() {
     setLoading(true);
     try {
       const url = new URL(link);
-
       const parts = url.pathname.split("/").filter(Boolean);
       if (parts.length < 2) {
         setReadme(
@@ -54,7 +53,7 @@ function App() {
       console.log("res:", res);
 
       if (res.data.success) {
-        const readme = await getPrivateData(res.data.data);
+        const readme = await getPrivateData(JSON.stringify(res.data.data));
         setReadme(readme || "⚠️ No README found.");
       } else {
         setReadme(`❌ Failed: ${res.data.error}`);
