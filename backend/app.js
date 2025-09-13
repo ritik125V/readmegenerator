@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import verify from "./verify.js";
 import dotenv from "dotenv";
-
+import helmet from 'helmet'
 dotenv.config();
 
 const clientId = process.env.CLIENT_ID;
@@ -13,7 +13,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 const jwtSecret = process.env.JWT_SECRET;
 const origin = process.env.ORIGIN;
 const app = express();
-
+app.use(helmet)
 app.use(cookieParser());
 app.use(
   cors({
@@ -120,7 +120,7 @@ app.get("/private-repo", verify, async (req, res) => {
         error: "Owner and repo query parameters are required",
       });
     }
-    console.log("owner:", owner, "repo:", repo);
+    console.log(`repo link is :-  https://api.github.com/repos/${owner}/${repo}`);
     const response = await axios.get(
       `https://api.github.com/repos/${owner}/${repo}`,
       {
