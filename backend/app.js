@@ -27,7 +27,7 @@ app.use(cors(
 // redirect krne ka route
 app.get('/auth/github' , (req , res)=>{
   const redirectUrl = process.env.ORIGIN
-    ? `${process.env.ORIGIN}/auth/github/callback`
+    ? `${process.env.BACKEND_URL}/auth/github/callback`
     : "http://localhost:3000/auth/github/callback";
   
   const Uri = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=user:email`
