@@ -18,7 +18,7 @@ const app = express()
 app.use(cookieParser());
 app.use(cors(
     {
-        origin: "http://localhost:5173" ||process.env.ORIGIN,
+        origin: process.env.ORIGIN || "http://localhost:5173",
         credentials: true,
         methods: ["GET" , "POST" , "PUT" , "DELETE"],
     }
@@ -26,7 +26,9 @@ app.use(cors(
 
 // redirect krne ka route
 app.get('/auth/github' , (req , res)=>{
-  const redirectUrl = process.env.ORIGIN+'/auth/github/callback' ||'http://localhost:3000/auth/github/callback' 
+  const redirectUrl = process.env.ORIGIN
+    ? `${process.env.ORIGIN}/auth/github/callback`
+    : "http://localhost:3000/auth/github/callback";
   
   const Uri = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=user:email`
 
@@ -88,11 +90,12 @@ app.get('/auth/github/callback',async(req , res )=>{
 
     // responses->
 
-    res.cookie("githubToken" , githubToken , {
-        httpOnly: true,
-        secure: false,
-        maxAge: 24 * 60 * 60 * 1000 
+    res.cookie("githubToken", githubToken, {
+      httpOnly: true,
+      secure: false,  
+      maxAge: 24 * 60 * 60 * 1000 
     })
+
     console.log("cookie sent");
     res.redirect(process.env.ORIGIN || "http://localhost:5173");
     
@@ -161,6 +164,6 @@ app.get("/private-repo", verify, async (req, res) => {
 
 
 // server 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     console.log('Server is ON ✅') 
 })
