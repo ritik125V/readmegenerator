@@ -137,7 +137,7 @@ async function privateRepo(link) {
             </button>
             <button
               className="flex items-center gap-2 bg-neutral-800 hover:bg-neutral-700 active:scale-95 transition rounded-lg px-3 font-medium border border-neutral-700"
-              onClick={() => (window.location.href = import.meta.env.AUTH_URL || 'http://localhost:3000/')}
+              onClick={() => (window.location.href = import.meta.env.AUTH_URL )}
             >
               <Github className="w-4 h-4" /> Login
             </button>
