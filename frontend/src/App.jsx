@@ -41,7 +41,7 @@ async function privateRepo(link) {
       setReadme("url is not valid")
     }
     const [owner, repo] = parts;
-    const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+    const baseURL = import.meta.env.VITE_BACKEND_API || "http://localhost:3000";
     const res = await axios.get(`${baseURL}/private-repo`, {
       params: { owner, repo },
       withCredentials: true,
