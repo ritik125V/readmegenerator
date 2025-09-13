@@ -34,11 +34,11 @@ BASIC Flow
 **Demo**  
 
 
-[![Demo](https://raw.githubusercontent.com/ritik125V/Readme-generator/main/Frontend/public/demo.gif)](https://raw.githubusercontent.com/ritik125V/Readme-generator/main/Frontend/public/demo.gif)
+[![Demo](https://raw.githubusercontent.com/ritik125V/readmegenerator/main/Frontend/public/demo.gif)](https://raw.githubusercontent.com/ritik125V/readmegenerator/main/Frontend/public/demo.gif)
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Polished Ui + better error handling ⬇️
-[![Demo](https://raw.githubusercontent.com/ritik125V/Readme-generator/main/Frontend/public/uiUpdatesDemo.gif)](https://raw.githubusercontent.com/ritik125V/Readme-generator/main/Frontend/public/uiUpdatesDemo.gif)
+[![Demo](https://raw.githubusercontent.com/ritik125V/readmegenerator/main/Frontend/public/uiUpdatesDemo.gif)](https://raw.githubusercontent.com/ritik125V/readmegenerator/main/Frontend/public/uiUpdatesDemo.gif)
 
 
 # Clone the repository
