@@ -13,7 +13,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 const jwtSecret = process.env.JWT_SECRET;
 const origin = process.env.ORIGIN;
 const app = express();
-app.use(helmet)
+app.use(helmet())
 app.use(cookieParser());
 app.use(
   cors({
