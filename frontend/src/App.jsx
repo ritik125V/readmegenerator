@@ -33,10 +33,12 @@ async function privateRepo(link) {
   setLoading(true);
   try {
     const url = new URL(link);
+    if(!url){
+      setReadme("URL is not Valid")
+    }
     const parts = url.pathname.split("/").filter(Boolean);
     if (parts.length < 2) {
-      alert("Invalid GitHub repository link.");
-      return;
+      setReadme("url is not valid")
     }
     const [owner, repo] = parts;
     const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
@@ -55,7 +57,7 @@ async function privateRepo(link) {
     }
   } catch (error) {
       console.error("error: ", error);
-      setReadme(error);
+      setReadme("error occured , try again");
   } finally {
     setLoading(false);
   }
