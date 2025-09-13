@@ -139,26 +139,28 @@ app.get("/private-repo", verify, async (req, res) => {
     
     res.json({ success: true, data: response.data });
   } catch (err) {
-    if (err.response) {
-      console.error("GitHub error:", err.response.data);
-      res.status(err.response.status).json({
-        success: false,
-        message: "GitHub API error occuted error : "+ " " +err.response.data.message || "Failed to fetch repository",
-      });
-    } else if (err.request) {
-      console.error("No response from GitHub:", err.request);
-      res.status(502).json({
-        success: false,
-        message: "No response from GitHub API",
-      });
-    } else {
-      console.error("Error fetching private repo:", err.message);
-      res.status(500).json({
-        success: false,
-        message: "Server error fetching private repo",
-      });
-    }
+  if (err.response) {
+    console.error("GitHub error:", err.response.data);
+    res.status(err.response.status).json({
+      success: false,
+      error: err.response.data.message || "Failed to fetch repository",
+      details: err.response.data, // 👈 send full details too
+    });
+  } else if (err.request) {
+    console.error("No response from GitHub:", err.request);
+    res.status(502).json({
+      success: false,
+      error: "No response from GitHub API",
+    });
+  } else {
+    console.error("Error fetching private repo:", err.message);
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
   }
+}
+
 });
 
 

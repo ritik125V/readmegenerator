@@ -29,46 +29,52 @@ function App() {
     setLoading(false);
     setLink("");
   }
-async function privateRepo(link) {
-  setLoading(true);
-  try {
-    const url = new URL(link);
+  async function privateRepo(link) {
+    setLoading(true);
+    try {
+      const url = new URL(link);
 
-    const parts = url.pathname.split("/").filter(Boolean);
-    if (parts.length < 2) {
-      setReadme("❌ URL is not valid. Please use format: https://github.com/{owner}/{repo}");
-      return;
+      const parts = url.pathname.split("/").filter(Boolean);
+      if (parts.length < 2) {
+        setReadme(
+          "❌ URL is not valid. Please use format: https://github.com/{owner}/{repo}"
+        );
+        return;
+      }
+
+      const [owner, repo] = parts;
+      const baseURL =
+        import.meta.env.VITE_BACKEND_API || "http://localhost:3000";
+
+      const res = await axios.get(`${baseURL}/private-repo`, {
+        params: { owner, repo },
+        withCredentials: true,
+      });
+
+      console.log("res:", res);
+
+      if (res.data.success) {
+        const readme = await getPrivateData(res.data.data);
+        setReadme(readme || "⚠️ No README found.");
+      } else {
+        setReadme(`❌ Failed: ${res.data.error}`);
+        console.error("Details:", res.data.details);
+      }
+    } catch (error) {
+      console.error("Error fetching repo:", error);
+      if (error.response) {
+        setReadme(
+          `❌ GitHub API error: ${error.response.data?.message || "Unknown"}`
+        );
+      } else if (error.request) {
+        setReadme("❌ No response from server. Please try again.");
+      } else {
+        setReadme(`❌ Error: ${error.message}`);
+      }
+    } finally {
+      setLoading(false);
     }
-
-    const [owner, repo] = parts;
-    const baseURL = import.meta.env.VITE_BACKEND_API || "http://localhost:3000";
-
-    const res = await axios.get(`${baseURL}/private-repo`, {
-      params: { owner, repo },
-      withCredentials: true,
-    });
-
-    console.log("res:", res);
-
-    if (res.data.success) {
-      const readme = await getPrivateData(res.data.data);
-      setReadme(readme || "⚠️ No README found.");
-    } else {
-      setReadme(`❌ Failed to fetch repository: ${res.data.error || "Unknown error"}`);
-    }
-  } catch (error) {
-    console.error("Error fetching repo:", error);
-    if (error.response) {
-      setReadme(`❌ GitHub API error: ${error.response.data?.message || "Unknown"}`);
-    } else if (error.request) {
-      setReadme("❌ No response from server. Please try again.");
-    } else {
-      setReadme(`❌ Error: ${error.message}`);
-    }
-  } finally {
-    setLoading(false);
   }
-}
 
   useEffect(() => {
     if (!Readme) return;
